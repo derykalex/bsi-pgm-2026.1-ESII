@@ -8,13 +8,25 @@ Não é necessário usar termos técnicos neste momento.
 
 ## Minha leitura inicial
 
-*(Espaço reservado para o estudante preencher)*
+* O código está todo em um único arquivo, o que deixa difícil de organizar e entender melhor o sistema
 
-Exemplo de entradas:
-- "A classe faz muita coisa ao mesmo tempo"
-- "Tem código de e-mail misturado com o cálculo de multa"
-- "O mesmo cálculo aparece duas vezes no código"
-- "As listas de equipamentos estão fora da classe, soltas no arquivo"
+* Algumas variáveis e nomes usados no código não são muito claros, o que pode confundir na leitura
+
+* Não há tratamento de erros, então se o usuário digitar algo errado o sistema pode parar ou funcionar de forma inesperada
+
+* Algumas funções fazem muitas coisas ao mesmo tempo, sem separação clara
+
+* O código tem poucos comentários, o que dificulta o entendimento para quem está lendo pela primeira vez
+
+* Algumas partes do código não parecem seguir exatamente o que foi descrito nos requisitos
+
+* O sistema não valida corretamente algumas entradas, como valores inválidos ou negativos
+
+* Não existe um padrão claro na escrita do código, deixando partes diferentes entre si
+
+* Existem problemas citados na dívida técnica que ainda continuam no código
+
+* O sistema parece difícil de manter ou melhorar no futuro por causa da organização atual
 
 ---
 
