@@ -1,1 +1,35 @@
+# Parte 1 — Avaliar os estilos arquiteturais
+
+| Critério                                                                 | Arquivo único | Em camadas | MVC |
+|--------------------------------------------------------------------------|--------------|-----------|-----|
+| Atende RNF03 (novo tipo sem modificar múltiplos módulos)?                | Não          | Sim       | Sim |
+| Atende RNF04 (testar regras sem estado externo)?                         | Não          | Sim       | Sim |
+| Adequado para CLI sem interface gráfica?                                 | Sim          | Sim       | Não |
+| Familiar para equipe iniciante?                                          | Sim          | Sim       | Médio |
+
+## Justificativas
+
+### Arquivo único
+- Não atende RNF03 porque qualquer mudança exige alterar o mesmo arquivo, aumentando o acoplamento.
+- Não atende RNF04 porque lógica e dados ficam misturados, dificultando testes isolados.
+- É adequado para CLI por ser simples.
+- É familiar para iniciantes, mas não escala bem.
+
+### MVC
+- Atende RNF03 pois separa responsabilidades (Model, View, Controller).
+- Atende RNF04 pois permite testar a lógica (Model) separadamente.
+- Não é ideal para CLI, pois foi pensado para interfaces gráficas.
+- É mais complexo para equipes iniciantes.
+
+### Em camadas
+- Atende RNF03 pois permite modificar partes do sistema sem afetar outras.
+- Atende RNF04 pois separa regras de negócio da infraestrutura.
+- É adequado para CLI.
+- É simples o suficiente para iniciantes e bem organizado.
+
+## Pergunta
+Qual estilo atende os dois RNFs com o menor custo de complexidade para este projeto e esta equipe?
+
+## Resposta
+Arquitetura em camadas, pois atende todos os requisitos com menor complexidade e melhor organização.
 
