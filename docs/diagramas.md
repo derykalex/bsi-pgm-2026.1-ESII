@@ -53,7 +53,11 @@ sequenceDiagram
  else equipamento indisponível
      servico-->>main: False
  end
-sequenceDiagram
+
+## UC02 — Registrar Devolução
+```mermaid
+
+  sequenceDiagram
  actor Atendente
  participant main as main.py
  participant servico as ServicoEmprestimo
@@ -72,4 +76,4 @@ sequenceDiagram
      servico-->>main: True
  else empréstimo não encontrado
      servico-->>main: False
- end
+ end   
