@@ -43,3 +43,51 @@ sequenceDiagram
  else equipamento indisponível
      servico-->>main: False
  end
+
+
+## UC02 — Registrar Devolução
+
+```mermaid
+sequenceDiagram
+ actor Atendente
+ participant main as main.py
+ participant servico as ServicoEmprestimo
+ participant repo as RepositorioEmprestimo
+ participant notif as Notificador
+
+ Atendente->>main: informa emprestimo_id
+ main->>servico: registrar_devolucao(emprestimo_id)
+ servico->>repo: buscar_emprestimo(emprestimo_id)
+ repo-->>servico: Emprestimo
+
+ alt empréstimo encontrado
+     servico->>repo: marcar_devolvido(emprestimo_id)
+     servico->>repo: marcar_disponivel(equip_id)
+     servico->>notif: notificar_devolucao(email)
+     servico-->>main: True
+ else empréstimo não encontrado
+     servico-->>main: False
+ end
+
+
+## UC03 — Listar Empréstimos em Atraso
+
+```mermaid
+sequenceDiagram
+ actor Atendente
+ participant main as main.py
+ participant servico as ServicoEmprestimo
+ participant repo as RepositorioEmprestimo
+
+ Atendente->>main: solicitar_atrasados()
+ main->>servico: listar_atrasados()
+ servico->>repo: buscar_emprestimos_atrasados()
+ repo-->>servico: lista_atrasados
+
+ alt existem atrasados
+     loop para cada empréstimo
+         servico-->>main: exibir_dados(emprestimo)
+     end
+ else nenhum atraso
+     servico-->>main: lista vazia
+ end
