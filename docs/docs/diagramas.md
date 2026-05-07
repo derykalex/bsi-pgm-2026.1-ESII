@@ -1,26 +1,30 @@
-# Atividade 4a — Materialização do Projeto
+# Atividade 4A — Materializar Projeto
 
 ## Decomposição em camadas
 
 ### models/equipamento.py
-Representa os dados dos equipamentos.
+Responsável por representar os dados de equipamentos, garantindo contrato tipado.
 
 ### models/emprestimo.py
-Representa os dados dos empréstimos.
-
-### repositories/repositorio_emprestimo.py
-Gerencia armazenamento e consulta de dados.
+Representa formalmente os empréstimos.
 
 ### services/servico_emprestimo.py
-Aplica regras de negócio.
+Centraliza regras de negócio.
 
 ### services/notificador.py
 Responsável por notificações.
 
-### main.py
-Interação com usuário.
+### repositories/repositorio_emprestimo.py
+Gerencia persistência e consultas.
 
-## UC01 — Registrar Empréstimo
+### main.py
+Camada de entrada.
+
+---
+
+## Diagramas de sequência
+
+### UC01 — Registrar Empréstimo
 
 ```mermaid
 sequenceDiagram
@@ -36,15 +40,14 @@ sequenceDiagram
  repo-->>servico: Equipamento
 
  alt equipamento disponível
-     servico->>repo: salvar_emprestimo(emprestimo)
-     servico->>repo: marcar_indisponivel(equip_id)
-     servico->>notif: notificar_emprestimo(email, data_devolucao)
-     servico-->>main: True
+    servico->>repo: salvar_emprestimo(emprestimo)
+    servico->>repo: marcar_indisponivel(equip_id)
+    servico->>notif: notificar_emprestimo(email, data_devolucao)
+    servico-->>main: True
  else equipamento indisponível
-     servico-->>main: False
+    servico-->>main: False
  end
-
-
+```
 ## UC02 — Registrar Devolução
 
 ```mermaid
@@ -60,16 +63,15 @@ sequenceDiagram
  servico->>repo: buscar_emprestimo(emprestimo_id)
  repo-->>servico: Emprestimo
 
- alt empréstimo encontrado
-     servico->>repo: marcar_devolvido(emprestimo_id)
-     servico->>repo: marcar_disponivel(equip_id)
-     servico->>notif: notificar_devolucao(email)
-     servico-->>main: True
- else empréstimo não encontrado
-     servico-->>main: False
+ alt empréstimo ativo
+    servico->>repo: marcar_devolvido(emprestimo_id)
+    servico->>repo: marcar_disponivel(equip_id)
+    servico->>notif: notificar_devolucao(email)
+    servico-->>main: True
+ else empréstimo já devolvido
+    servico-->>main: False
  end
-
-
+```
 ## UC03 — Listar Empréstimos em Atraso
 
 ```mermaid
@@ -79,15 +81,16 @@ sequenceDiagram
  participant servico as ServicoEmprestimo
  participant repo as RepositorioEmprestimo
 
- Atendente->>main: solicitar_atrasados()
+ Atendente->>main: solicita atrasados
  main->>servico: listar_atrasados()
  servico->>repo: buscar_emprestimos_atrasados()
- repo-->>servico: lista_atrasados
+ repo-->>servico: lista_emprestimos
 
  alt existem atrasados
-     loop para cada empréstimo
-         servico-->>main: exibir_dados(emprestimo)
-     end
- else nenhum atraso
-     servico-->>main: lista vazia
+    loop para cada empréstimo
+        servico-->>main: exibir_emprestimo(atrasado)
+    end
+ else sem atrasados
+    servico-->>main: lista_vazia
  end
+```
